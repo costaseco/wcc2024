@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>The weather in Carcavelos</title>
+    <script src="script.js"></script>
+    <script src="timer.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>
+            The weather in Carcavelos
+        </h1>
+        <p id="clock"></p>
+    </header>
+    <section>
+        <p>This is a weather page with live data, could become a clone for <a href="https://www.windguru.cz/1060">Windguru</a></a></p>
+        <div class="weathercard">
+        <div id="cloudimage"></div>
+        <div class="weatherinfo big">
+            <span id="temperature"></span>ºC
+        </div>
+        <div class="weatherinfo">
+        <div class="field">
+            Feels like <span id="apparent_temperature"></span>ºC
+        </div>
+        <div class="field">
+            Wind speed  <span id="wind_speed"></span> km/h <span id="wind_direction"></span>
+        </div>
+        <div class="field">
+            Cloudcover  <span id="cloudcover"></span>%
+        </div>
+        </div>
+        </div>
+    </section>
+    <section>
+        <ul id="hourlines">
+        <li class="hourheader"">
+                        <div>Time</div>
+                        <div>Cloud</div>
+                        <div>Temp</div>
+                        <div>Rain</div>
+                    </li>
+        </ul>
+    </section>
+    <footer>
+        <p>Powered by <a href="https://open-meteo.com">Open-Meteo</a></p>
+    </footer>
+
+</body>
+</html>

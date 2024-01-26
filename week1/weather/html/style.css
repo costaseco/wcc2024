@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    background-color: #f0f0f0;
+}
+header {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px;
+}
+section {
+    padding: 10px;
+}
+.field {
+    margin: 10px;
+}
+.weathercard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+}
+.weathercard {
+    display: flex;
+}
+.big {
+    font-size: 300%;
+}
+.houritem, .hourheader {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin: 10px;
+}
+.houritem div, .hourheader div {
+    width: 80px;
+    margin: 5px;
+}

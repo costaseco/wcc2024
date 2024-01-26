@@ -1,0 +1,155 @@
+\documentclass[12pt]{book}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\lstset{
+    backgroundcolor=\color{lightgray},
+    basicstyle=\ttfamily,
+    breaklines=true
+}
+
+\lstdefinelanguage{JavaScript}{
+  morekeywords=[1]{break, continue, delete, else, for, function, if, in,
+    new, return, this, typeof, var, void, while, with},
+  % Literals, primitive types, and reference types.
+  morekeywords=[2]{false, null, true, boolean, number, undefined,
+    Array, Boolean, Date, Math, Number, String, Object},
+  % Built-ins.
+  morekeywords=[3]{eval, parseInt, parseFloat, escape, unescape},
+  sensitive,
+  morecomment=[s]{/*}{*/},
+  morecomment=[l]//,
+  morecomment=[s]{/**}{*/}, % JavaDoc style comments
+  morestring=[b]',
+  morestring=[b]"
+}[keywords, comments, strings]
+
+\title{A Smart Guide to Building Web Applications}
+\author{João Costa Seco}
+\begin{document}
+
+\maketitle
+
+\chapter{Introduction}
+
+This small booklet has X parts illustrating small aspects of the construction of
+a web server in JavaScript, a static web page using basic technologies like HTML
+and CSS. And then how to develop a dynamic web page with events and dynamic
+construction of HTML elements. 
+
+The goal of this booklet is to illustrate the different aspects of the
+construction of a web server in TypeScript. The booklet is not intended to be a
+complete reference, but rather a quick guide to get you started.
+
+\part{A Web Server in TypeScript}
+
+\chapter{Setting up your first node application}
+
+A Web server is a program that listens to requests from a browser and returns a
+response. Responses can be HTML pages, images, JSON data, etc. Content can be
+either static if provided by an existing file in the server filesystem, or
+dynamic if it is created on demand and based on the information from the request.
+
+We are going to use Node.js to create our web server. Node.js is a JavaScript
+runtime environment that allows us to run JavaScript and TypeScript code outside
+of the browser.
+
+\begin{enumerate}
+
+\item 
+To start with you need to install Node.js. You can download it from the
+\href{https://nodejs.org}{Node.js} website.
+
+\begin{lstlisting}[language=bash]
+    npm init
+\end{lstlisting}
+
+\item Next, you need to create a directory for your project and initialize it.
+
+\begin{lstlisting}[language=bash]
+    mkdir myproject
+    cd myproject
+    npm init -y
+\end{lstlisting}
+
+These commands will add a \texttt{package.json} file to your project. This file
+contains all the configuration information for your project.
+
+\item Next, you need to install the TypeScript compiler and initialize it.
+
+\begin{lstlisting}[language=bash]
+    npm install -g typescript
+    tsc --init
+    npm install ts-node typescript --save-dev
+\end{lstlisting}
+
+These commands will add the file \texttt{tsconfig.json} to your project and
+install the necessary packages. This will contain the information for the
+TypeScript compiler to compile your code.
+
+\item Next, you need to write your first TypeScript file. Create a file called
+\texttt{index.ts} in a folder called \texttt{src}.
+
+\begin{lstlisting}
+    console.log("Hello World");
+\end{lstlisting}
+
+\item Change your \texttt{package.json} file and modify the "start" script to run your program.
+
+\begin{lstlisting}[language=JavaScript]
+    "scripts": {
+        "start": "ts-node src/index.ts"
+    },
+\end{lstlisting}
+
+\item Finally, you can run your program with the following command:
+
+\begin{lstlisting}[language=bash]
+    npm start
+\end{lstlisting}
+
+\end{enumerate}
+
+\chapter{Setting up your first web server}
+
+\begin{enumerate}
+\item Next, you need to install the Express framework
+
+\begin{lstlisting}[language=bash]
+    npm install express --save
+\end{lstlisting}
+
+\end{enumerate}
+
+\chapter{Loading files from the web server}
+
+\chapter{Returning dynamic content}
+
+Use a form to upload parameters.
+
+\chapter{Webservices: returning JSON data}
+
+\part{A Web page using HTML and CSS}
+
+\chapter{HTML: Writing your first web page}
+
+\chapter{HTML: The anatomy of an HTML element}
+
+\chapter{HTML: Basic Text Formatting}
+
+\chapter{HTML: Adding images}
+
+\chapter{HTML: Linking different pages}
+
+\chapter{HTML: Formatting with stylesheets}
+
+\chapter{HTML: Basic Layout with CSS}
+
+\chapter{HTML: Making requests with Forms}
+
+\part{Reactive pages: Events and JavaScript}
+
+\part{Dynamic pages with JavaScript}
+
+\end{document}
