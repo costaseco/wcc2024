@@ -1,0 +1,169 @@
+
+* {
+    font-family: sans-serif;
+}
+
+BODY {
+    padding: 10px;
+    font-family: sans-serif;
+}
+
+#titlebox {
+    background-color: blue;
+    color: white;
+    height: 200px;
+    padding: 10px;
+}
+
+#title {
+    text-align: center;
+    font-size: 500%;
+}
+
+FOOTER {
+  background-color: rgb(0, 0, 121);
+  color: white;
+}
+
+FOOTER > DIV {
+  display: inline-block;
+  margin: 20px;
+}
+
+FOOTER A:link, FOOTER A:visited {
+  color: white;
+
+}
+
+/* Para formatar o menu */
+
+#topbar, NAV {
+    background-color: darkblue;
+    color: white;
+    height: 60px;
+}
+
+DIV#topbar {
+    border: solid black 1px;
+}
+
+LI.hidden {
+    display: none
+}
+
+NAV > * {
+    display: inline-block;
+}
+
+#searchbox {
+  float: right;
+  margin: 15px;
+}
+
+NAV > UL > LI {
+    list-style: none;
+    width: 150px;
+    display: inline-block;
+}
+
+.MenuItem {
+    list-style: none;
+    width: 150px;
+    display: inline-block;
+}
+
+NAV > UL > LI > A {
+    color: white;
+    text-decoration: none;
+}
+
+NAV A {
+    color: white;
+    text-decoration: none;
+}
+
+@media screen and (min-width:700px) {
+    #menuicon {
+        display:none;
+    }
+
+    #searchicon {
+        display:none;
+    }
+
+    #sidebar {
+        float: right;
+        background-color: lightyellow;
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width:700px) {
+    #topbar { height:10px; }
+
+    #title {
+        text-align: center;
+        font-size: 200%;
+    }
+        
+    #menuicon { margin:10px; }
+
+    #menuitemlist { display: none; }
+
+    #searchicon { margin:10px; }
+
+    #searchbox { display:none }
+
+    #sidebar {
+        background-color: lightyellow;
+        padding: 20px;
+        border: solid 5px #e0e0c0;
+    }
+}
+
+/* Para formatar as caixas dos livros */
+
+#listofbooks {
+    padding: 0px;
+}
+
+#listofbooks > li {
+    list-style: none;
+    width: 400px;
+    height: 600px;
+    margin: 20px;
+    display: inline-block;
+    vertical-align:top;
+    background-color: #AAAAAA;
+}
+
+#listofbooks > li > .bookbox > div {
+    display: inline-block;
+    width: 70%;
+    margin: 20px;
+}
+
+#listofbooks > li > div {
+  text-align: center;
+}
+
+#listofbooks > li > div > img {
+  padding: 10px;  
+  min-width: 200px;
+  max-height: 300px;
+  display: inline-block;
+}
+
+
+/* Para formatar as estrelas */
+
+.star {
+    width:1em;
+    font-size:30px;
+    color:#ccc;
+}
+
+.yellowstar {
+    color:#ffc700;
+}
+

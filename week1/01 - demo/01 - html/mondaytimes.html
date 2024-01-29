@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Head defines invisible information about the page -->
+        <!-- Meta information, only read by the machine -->
+        <meta charset="utf8">
+        <meta name="description" content="My personal web page">
+        <meta name="keywords" content="HTML, CSS, XML, Javascript">
+        <meta name="author" content="João Costa Seco">
+
+        <style type="text/css">
+            * { font-family: sans-serif; }
+        </style>
+
+    </head>
+
+    <body>
+        <header>
+            <img src="mondaytimes.png" width="100%">
+            <h1>Monday Times</h1>
+
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#news">News</a></li>
+                <li><a href="#sports">Sports</a></li>
+                <li><a href="http://weather.com">Weather</a></li>
+            </ul>
+        </nav>
+        
+        <section>
+            <h2 id="news">News Section</h2>
+            <article>
+                <h2>News Article</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in porta lorem. Morbi condimentum est
+                    nibh, et consectetur tortor feugiat at.</p>
+            </article>
+            <article>
+                <h2>News Article</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in porta lorem. Morbi condimentum est
+                    nibh, et consectetur tortor feugiat at.</p>
+            </article>
+        </section>
+        
+        <footer>
+            <p>&copy; 2014 Monday Times. All rights reserved.</p>
+
+            <h2>Newsletter</h2>
+            <p>To receive our newsletter please insert your email below</p>
+            <form action="http://someservice.to" method="POST" _target="">
+                <Label for="email">Email: </Label>
+                <input type="text" id="email" name="email">
+                <select name="period">
+                    <option value="daily">Daily</option>
+                    <option value="weekly" selected>Weekly</option>
+                </select>
+                <input type="submit" value="Subscribe">
+            </form>
+
+            <hr>
+            <form>
+            <div>
+                <button>Donate €10</button>
+                <button>Donate €20</button>
+                <button>Donate €50</button>
+            </div>
+            </form>
+            <progress value="6000" max="10000"></progress> Goal €10000
+        </footer>
+    </body>
+</html>
