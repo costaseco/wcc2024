@@ -1,7 +1,9 @@
-\documentclass[12pt,a5paper]{book}
+\documentclass[12pt,a5paper]{memoir}
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage{graphicx}
+
 
 \lstset{
     backgroundcolor=\color{lightgray},
@@ -31,6 +33,8 @@
 
 \maketitle
 
+\tableofcontents
+
 \chapter{Introduction}
 
 This small booklet has X parts illustrating small aspects of the construction of
@@ -46,22 +50,23 @@ complete reference, but rather a quick guide to get you started.
 
 \chapter{Setting up your first node application}
 
-A Web server is a program that listens to requests from a browser and returns a
-response. Responses can be HTML pages, images, JSON data, etc. Content can be
-either static if provided by an existing file in the server filesystem, or
-dynamic if it is created on demand and based on the information from the request.
-
-We are going to use Node.js to create our web server. Node.js is a JavaScript
-runtime environment that allows us to run JavaScript and TypeScript code outside
-of the browser.
+To start this adventure, we will start by setting up a simple \texttt{Node.js}
+application. This will allow us to run JavaScript and TypeScript code outside of
+the browser. Node.js is a JavaScript runtime environment that allows us to run
+JavaScript and TypeScript code outside of the browser.
 
 \begin{enumerate}
 
 \item 
-To start with you need to install Node.js. You can download it from the
+To start with you need to install \texttt{Node.js} in your computer. You can download it from the
 \href{https://nodejs.org}{Node.js} website.
+%
+Next, we are going to use command line instructions and a text editor. The
+recommended editor for this journey is Visual Studio Code, with a few plug-ins
+that will be highlighted along the way. 
 
-\item Next, you need to create a directory for your project and initialize it.
+\item To start, you need to create a directory for your project and initialize
+it.
 
 \begin{lstlisting}[language=bash]
 mkdir myproject
@@ -106,23 +111,172 @@ npm start
 \end{lstlisting}
 
 You should see the message "Hello World" printed in the console.
-Congratulations, you have succeded in writing and running your first TypeScript
+Congratulations, you have succeeded in writing and running your first TypeScript
 application.
 
 \end{enumerate}
 
 \chapter{Setting up your first web server}
 
+A Web server is a program that listens to requests from a browser and returns a
+response. Responses can be HTML pages, images, JSON data, etc. Content can be
+either static if provided by an existing file in the server filesystem, or
+dynamic if it is created on demand and based on the information from the request.
+
 \begin{enumerate}
-\item Next, you need to install the Express framework
+
+\item Start by clearing the \texttt{index.ts} file. To start designing a basic
+web server, we will use the \texttt{http} module. Write the following declarations into the 
+\texttt{index.ts} file.
+
+\begin{lstlisting}
+  import http from 'http'
+\end{lstlisting}
+
+\item Then we need some constants to determine the address and port of our
+server. Write the following declarations next to the previous one.
+
+\begin{lstlisting}
+const host = 'localhost';
+const port = 8080;
+\end{lstlisting}
+
+\item Next, we need to write a function that will handle the requests. This
+function accepts two objects as parameters: the request and the response. For
+now, we are just going to return a simple HTML page for all requests. Write the
+following code in the \texttt{index.ts} file.
+
+\begin{lstlisting}
+function doRequests(
+    req:IncomingMessage, 
+    res:ServerResponse) {
+
+  const page = `
+    <HTML>
+      <BODY>
+        Hello, World! from the server
+      </BODY>
+    </HTML>
+  `
+  res.setHeader("Content-Type", 
+                "text/html");
+  res.writeHead(200)
+  res.end(page)
+}
+\end{lstlisting}
+  
+Notice that the immutable variable \texttt{page} contains the HTML code for a
+simple page and that the object \texttt{res} is used to set the headers, and the
+return code of the response. The \texttt{end} method is used to send the result
+to the browser, in the body section. Notice the use of the backtick quotes to
+define a string over several lines in the file.
+
+Since we need to use type annotations for the function parameters, we need to
+import types \texttt{IncomingMessage} and \texttt{ServerResponse}. So, we need to update
+our import statement to include these.
+
+\begin{lstlisting}
+  import http, {IncomingMessage, ServerResponse} from 'http'
+\end{lstlisting}
+
+\item Next, we need to create the server and start listening to requests. Write
+the following code in your file:
+
+\begin{lstlisting}
+const server = 
+  http
+  .createServer(doRequests);
+
+server.listen(
+  port, 
+  host, 
+  () => {
+    console.log(`Server is running on http://${host}:${port}`);
+  }
+);
+\end{lstlisting}
+
+We first create an object called \texttt{server} based on the previously defined
+function doRequests. Then we call the \texttt{listen} method on the server
+object to start listening to requests. The \texttt{listen} method accepts three
+parameters: the port, the host, and a callback function that is called when the
+server is ready to accept requests.
+%
+In this case, the backtick quotes are used to define an interpolated string with
+the host and port values.
+
+\item
+Your \texttt{index.ts} file should look like this by now:
+
+\begin{lstlisting}
+import http, {IncomingMessage, ServerResponse} from 'http'
+const host = 'localhost';
+const port = 8080;
+
+function doRequests(
+  req:IncomingMessage, 
+  res:ServerResponse) {
+    const page = `
+        <HTML>
+          <BODY>
+            Hello, World! from the server
+          </BODY>
+        </HTML>
+        `
+    res.setHeader("Content-Type", "text/html");
+    res.writeHead(200)
+    res.end(page)
+}
+
+const server = 
+  http
+  .createServer(doRequests);
+
+server.listen(
+  port, 
+  host, 
+  () => {
+    console.log(`Server is running on http://${host}:${port}`);
+  }
+);
+\end{lstlisting}
+
+
+\item Finally, you can run your program with the following command:
+
 
 \begin{lstlisting}[language=bash]
-    npm install express --save
+npm start
 \end{lstlisting}
+  
+You should see the message "Server is running on http://localhost:8080" printed
+  in the console. If you go to a browser and use that same URL, you should see 
+  
+\includegraphics[width=\linewidth]{WebServer1.jpg}
+  
+  Congratulations, you have succeeded in writing and running
+  your webserver using TypeScript.
+
+  (You can find the final code in the file \texttt{index.ts} in the folder
+  chapter2 of this guide.)
 
 \end{enumerate}
 
+\chapter{Returning a 404 error}
+
+\begin{lstlisting}
+a
+\end{lstlisting}
+
 \chapter{Loading files from the web server}
+
+\begin{lstlisting}
+
+\end{lstlisting}
+
+
+  
+
 
 \chapter{Returning dynamic content}
 
