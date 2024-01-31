@@ -1,4 +1,4 @@
-\documentclass[12pt]{book}
+\documentclass[12pt,a5paper]{book}
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{hyperref}
@@ -61,16 +61,12 @@ of the browser.
 To start with you need to install Node.js. You can download it from the
 \href{https://nodejs.org}{Node.js} website.
 
-\begin{lstlisting}[language=bash]
-    npm init
-\end{lstlisting}
-
 \item Next, you need to create a directory for your project and initialize it.
 
 \begin{lstlisting}[language=bash]
-    mkdir myproject
-    cd myproject
-    npm init -y
+mkdir myproject
+cd myproject
+npm init -y
 \end{lstlisting}
 
 These commands will add a \texttt{package.json} file to your project. This file
@@ -79,9 +75,9 @@ contains all the configuration information for your project.
 \item Next, you need to install the TypeScript compiler and initialize it.
 
 \begin{lstlisting}[language=bash]
-    npm install -g typescript
-    tsc --init
-    npm install ts-node typescript --save-dev
+npm install -g typescript
+tsc --init
+npm install ts-node typescript --save-dev
 \end{lstlisting}
 
 These commands will add the file \texttt{tsconfig.json} to your project and
@@ -92,22 +88,26 @@ TypeScript compiler to compile your code.
 \texttt{index.ts} in a folder called \texttt{src}.
 
 \begin{lstlisting}
-    console.log("Hello World");
+console.log("Hello World");
 \end{lstlisting}
 
 \item Change your \texttt{package.json} file and modify the "start" script to run your program.
 
 \begin{lstlisting}[language=JavaScript]
-    "scripts": {
-        "start": "ts-node src/index.ts"
-    },
+"scripts": {
+    "start": "ts-node src/index.ts"
+},
 \end{lstlisting}
 
 \item Finally, you can run your program with the following command:
 
 \begin{lstlisting}[language=bash]
-    npm start
+npm start
 \end{lstlisting}
+
+You should see the message "Hello World" printed in the console.
+Congratulations, you have succeded in writing and running your first TypeScript
+application.
 
 \end{enumerate}
 
