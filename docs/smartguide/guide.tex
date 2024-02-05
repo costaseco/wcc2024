@@ -264,25 +264,51 @@ You should see the message "Server is running on http://localhost:8080" printed
 
 \chapter{Returning a 404 error}
 
-\begin{lstlisting}
-a
-\end{lstlisting}
-
-\chapter{Loading files from the web server}
+server-1 -- the final code should be
 
 \begin{lstlisting}
+function doRequests(req:IncomingMessage, res:ServerResponse) {
+  console.log(req.method + ": " + req.url)
 
+  switch (req.url) {
+      case "/hello":
+          const page = 
+          `<HTML>
+              <BODY>
+                  Hello, World! from the server
+              </BODY>
+          </HTML>`
+          res.setHeader("Content-Type", "text/html");
+          res.writeHead(200)
+          res.end(page)
+          break;
+
+      default:
+          res.writeHead(404)
+          res.end()
+          break;
+  }
+}
 \end{lstlisting}
 
+\chapter{Returning static content}
 
+server 2
+
+
+\chapter{Returning static content, an index}
   
-
+server-3
 
 \chapter{Returning dynamic content}
 
 Use a form to upload parameters.
 
+server-4
+
 \chapter{Webservices: returning JSON data}
+
+server-5
 
 \part{A Web page using HTML and CSS}
 
