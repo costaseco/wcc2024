@@ -1,0 +1,3 @@
+{
+    "pandoc.pdfOptString": "-s --defaults defaults.yaml"
+}
