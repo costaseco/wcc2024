@@ -266,13 +266,49 @@ In general, a web server should return a different page depending on the HTTP st
 
 [^2]: In Firefox: **Tools > Browser Tools > Web Developer Tools**; In Chrome: **View > Developer > Developer Tools**.
 
-## Loading files from the web server
+<!-- ~~~javascript
+function doRequests(req:IncomingMessage, res:ServerResponse) {
+  console.log(req.method + ": " + req.url)
+
+  switch (req.url) {
+      case "/hello":
+          const page = 
+          `<HTML>
+              <BODY>
+                  Hello, World! from the server
+              </BODY>
+          </HTML>`
+          res.setHeader("Content-Type", "text/html");
+          res.writeHead(200)
+          res.end(page)
+          break;
+
+      default:
+          res.writeHead(404)
+          res.end()
+          break;
+  }
+}
+~~~ -->
+
+
+## Returning static content
+
+- server-2
+
+## Returning static content: an index
+
+- server-3
 
 ## Returning dynamic content
 
 Use a form to upload parameters.
 
+- server-4
+
 ## Webservices: returning JSON data
+
+- server-5
 
 # A Web page using HTML and CSS
 
