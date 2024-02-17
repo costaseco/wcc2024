@@ -183,7 +183,7 @@ the following code in your file:
     import http, {IncomingMessage, ServerResponse} from 'http'
     const host = 'localhost';
     const port = 8080;
-
+    const basedir = "./public"
     function doRequests(
       req:IncomingMessage, 
       res:ServerResponse) {
@@ -234,13 +234,18 @@ the following code in your file:
 
 In the previous example, your web server returns a successful response when you access the URL (`localhost:8080`). 
 
-When accessing a URL, your browser receives the response (i.e. the content of the webpage), and also receives an HTTP code denoting the nature of the response. In the previous case, since the response is successful (i.e. the page exists and no error occurred when accessing it), the server returns the HTTP status code `200 OK`.
+When accessing a URL, your browser receives the response (i.e. the content of the webpage), and also receives an HTTP
+code denoting the nature of the response. In the previous case, since the response is successful (i.e. the page exists
+and no error occurred when accessing it), the server returns the HTTP status code `200 OK`.
 
-However, in some cases, accessing a URL may return an error. For instance, when you access a [non-existing page](), you typically receive a `404 Not Found` status code. This signals to your web browser that the page does not exist, and allows it to react accordingly[^1].
+However, in some cases, accessing a URL may return an error. For instance, when you access a [non-existing page](), you
+typically receive a `404 Not Found` status code. This signals to your web browser that the page does not exist, and
+allows it to react accordingly[^1].
 
 [^1]: For an extensive list of HTTP status codes, you can check [this](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) page.
 
-Let's change the code in our web server to return a `404 Not found`. Start by opening the `index.ts` file in the root of your project, and find the following line:
+Let's change the code in our web server to return a `404 Not found`. Start by opening the `index.ts` file in the root of
+your project, and find the following line:
 
 ~~~javascript
 res.writeHead(200)
@@ -258,11 +263,14 @@ Now, run your web-server again:
 npm start
 ~~~
 
-If you navigate with your browser to the URL (`localhost:8080`), you still see the same page as before. To see the error code, you can open the developer tools[^2], and then open the **Network** tab. Now, if you reload the page, you should see the 404 error being returned from the server.
+If you navigate with your browser to the URL (`localhost:8080`), you still see the same page as before. To see the error
+code, you can open the developer tools[^2], and then open the **Network** tab. Now, if you reload the page, you should
+see the 404 error being returned from the server.
 
 ![](./images/404.png)
 
-In general, a web server should return a different page depending on the HTTP status code. We'll explore this in the next step, where we will return a `404 Not found` page if a user tries to access a non-existing file.
+In general, a web server should return a different page depending on the HTTP status code. We'll explore this in the
+next step, where we will return a `404 Not found` page if a user tries to access a non-existing file.
 
 [^2]: In Firefox: **Tools > Browser Tools > Web Developer Tools**; In Chrome: **View > Developer > Developer Tools**.
 
@@ -294,23 +302,172 @@ function doRequests(req:IncomingMessage, res:ServerResponse) {
 
 ## Returning static content
 
-- server-2
+In this section, we'll enhance our web server to serve static content such as HTML, CSS, and JavaScript files. This
+allows us to serve pre-existing files, such as HTML pages, images, or videos, from our server.
+
+To do so, let's start by changing the code of the `doRequests` function, in the file `index.ts`.
+
+We start by writing a `switch` statement, which we use to determine the action to take based on the requested URL.
+
+~~~javascript
+function doRequests(req, res) {
+  console.log(req.method + ": "+ req.url)
+  switch (req.url) {
+    ...
+  }
+~~~
+
+Now, inside the `switch` statement we can write the different cases. Each
+case represents a specific URL route, and depending on the requested URL, different actions are performed, such as
+returning a predefined HTML page or serving a static file from the server.
+
+The first case is for the URL `/hello`, which should display the same page we used in the previous example. Let's add this case to the `switch` statement:
+
+~~~javascript
+function doRequests(req, res) {
+  console.log(req.method + ": "+ req.url)
+  switch (req.url) {
+  case "/hello":
+    const page = "<HTML><BODY>Hello, World! from the server</BODY></HTML>"
+    res.setHeader("Content-Type", "text/html");
+    res.writeHead(200)
+    res.end(page)
+    break;
+}
+~~~
+
+Now, if you start the web server and access the URL `/hello`, the browser will display a simple HTML page that says "Hello, World! from the server".
+
+Let's add another case. For any other URL request (that is not `/hello`), we want to attempt to read the corresponding file from the `public/` directory and serve it. To implement this we can use the `default` case, which is executed when none of the defined cases match the requested URL.
+
+~~~javascript
+function doRequests(req, res) {
+  console.log(req.method + ": "+ req.url)
+  basedir = './public'
+  switch (req.url) {
+    case "/hello":
+      ...
+    default:
+      fs
+      .readFile(basedir + req.url)
+      .then(function(data) {
+        res.setHeader("Content-Type", "text/html");
+        res.writeHead(200)
+        res.end(data)
+      })
+      .catch(function () {
+        res.writeHead(404)
+        res.end()
+      })
+      break;
+  }
+~~~
+
+If the file is found, we serve it's content (`data`) with an HTTP status code of 200 (OK) along with the appropriate
+content type header. If the file is not found, we return a 404 (Not Found) status code.
+
+By handling these cases, our web server becomes capable of serving static files, making it more versatile for building web applications.
 
 ## Returning static content: an index
 
-- server-3
+In this section, we'll further enhance our web server to serve an index page when the root URL (`/`) is accessed. This index page serves as the main entry point for our website and typically contains links to other pages or resources.
+
+To implement this, we'll add another case to our switch statement in the `doRequests` function to handle requests to the
+root URL (`/`). When the root URL is accessed, we'll read the content of the `index.html` file from the `public/`
+directory and serve it to the client.
+
+~~~javascript
+case "/":
+  fs
+  .readFile(basedir + "/index.html")
+  .then(function(data) {
+    res.setHeader("Content-Type", "text/html");
+    res.writeHead(200)
+    res.end(data)
+  })
+  .catch(function () {
+    res.writeHead(404)
+    res.end()
+  })
+  break;
+~~~
+
+Now, if you start the web server and access the URL (`http://localhost:8080`), you should see the contents of the `public/index.html` file displayed.
 
 ## Returning dynamic content
 
-Use a form to upload parameters.
+In this section, we'll explore how to return dynamic content from our web server. Dynamic content refers to web pages
+that are generated on-the-fly in response to user input or other external factors. We'll specifically focus on handling
+both `GET` and `POST` requests to return different responses based on the request method.
 
-- server-4
+In the previous step, we added a case to serve the `index.html` when the root of the web server is accessed. In this page (which you can view by starting the server and going to `http://localhost:8080`), there is a form with a field called `name`. You can check this by inspecting the `index.html` file, located in the `public` folder:
+
+~~~html
+<form action="/hello" method="POST">
+      Give me a name: <input type="text" name="name">
+    </form>
+~~~
+
+This markup indicates to the browser that when the user submits the form, a `POST` request (method) should be made to the endpoint `/hello` (action), containing a key-value pair where the key is `name` (the name of the field) the value is what the user provides as input for that field.
+
+To handle this, we need to change the code corresponding to the `/hello` case. Let's start by modifying this case in the code (`index.ts` file). First, we need to check the type of the request. If the request is a `GET`, then we simply serve the same HTML content as before. If the request is a `POST` (meaning that a user submitted the form to this endpoint), then we need to handle the form data and act accordingly.
+
+~~~javascript
+function doRequests(req, res) {
+  console.log(req.method + ": "+ req.url)
+  switch (req.url) {
+    case "/hello":
+      if( req.method == "GET" ) {
+        const page = `
+          <HTML>
+            <BODY>Hello, World! from the server</BODY>
+          </HTML>
+        `
+        res.setHeader("Content-Type", "text/html");
+        res.writeHead(200)
+        res.end(page)
+        break;
+      } else if( req.method == "POST") {
+        ...
+      }
+~~~
+
+For this example, when the user submits the form, we want to return a webpage with the content:
+
+~~~
+Hello, <name>! through a POST HTTP request
+~~~
+
+replacing `<name>` with whatever value the user submits in the form.
+
+To do so, we can add the following code to `else if` statement, which is executed when the form is submitted:
+
+~~~javascript
+let body = ""
+req.on('data', chunk => { body = body + chunk })
+req.on('end', () => {
+  let formData = parse(body)
+  const page = `
+    <HTML>
+      <BODY>
+        Hello, ${formData["name"]}! through a POST HTTP request
+      </BODY>
+    </HTML>
+  `
+  res.setHeader("Content-Type", "text/html");
+  res.writeHead(200)
+  res.end(page)
+})
+break;
+~~~
+
+The values that the user submits in the form are held in the `formData` array. The values are indexed by their corresponding `name` attribute in the HTML file, so to get the `name` field we simply access `formData["name"]`.
 
 ## Webservices: returning JSON data
 
 - server-5
 
-# A Web page using HTML and CSS
+<!-- # A Web page using HTML and CSS
 
 ## HTML: Writing your first web page
 
@@ -330,4 +487,4 @@ Use a form to upload parameters.
 
 # Reactive pages: Events and JavaScript
 
-# Dynamic pages with JavaScript
+# Dynamic pages with JavaScript -->
